@@ -6,6 +6,8 @@ CREATE TABLE "users" (
     "user_role" INTEGER NOT NULL,
     "status" TEXT NOT NULL,
     "online_status" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
