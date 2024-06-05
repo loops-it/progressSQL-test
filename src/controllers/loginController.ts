@@ -25,13 +25,14 @@ export const login = async (req: Request, res: Response, next: Function) => {
       //   "status" : "active",
       //   },
       // });
-      const user = await sql`SELECT id, email, password, user_role, status, online_status,createdAt,updatedAt
+      const user_details = await sql`SELECT id, email, password, user_role, status, online_status,createdAt,updatedAt
       FROM users
       WHERE email = 'admin123@gmail.com' 
       AND user_role = 1 
       AND status = 'active'
       LIMIT 1;`;
-      console.log("user : ",  user.rows[0]);
+      //console.log("user : ",  user.rows[0]);
+      const user =user_details.rows[0];
       if (user) {
         if(!await bcrypt.compare(password, user.password)){
         req.flash('error', 'Invalid login details');
