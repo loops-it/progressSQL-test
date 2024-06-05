@@ -17,11 +17,11 @@ import pg from 'pg';
 const sequelize = new Sequelize({
     dialect: 'postgres',
     dialectModule: pg,
-    host: 'ep-patient-dew-a4qwbn7j-pooler.us-east-1.aws.neon.tech', 
+    host: 'ep-snowy-block-a4wxxwxg-pooler.us-east-1.aws.neon.tech', 
     port: 5432,
     database: 'verceldb', 
     username: 'default', 
-    password: 'iLRzX32vyrDA', 
+    password: '9ChbTvy3BHio', 
     ssl: true, 
     dialectOptions: {
         ssl: {
