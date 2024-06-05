@@ -18,19 +18,19 @@ export const login = async (req: Request, res: Response, next: Function) => {
     let email = req.body.email;
     let password = req.body.password;
     try {
-      // const user = await User.findOne({
-      //   where: {
-      //   email,
-      //   "user_role" : "1",
-      //   "status" : "active",
-      //   },
-      // });
-      const user_details = await sql`SELECT id, email, password, user_role, status, online_status,createdAt,updatedAt
-      FROM users
-      WHERE email = 'admin123@gmail.com' 
-      AND user_role = 1 
-      AND status = 'active'
-      LIMIT 1;`;
+      const user_details = await User.findOne({
+        where: {
+        email,
+        "user_role" : "1",
+        "status" : "active",
+        },
+      });
+      // const user_details = await sql`SELECT id, email, password, user_role, status, online_status,createdAt,updatedAt
+      // FROM users
+      // WHERE email = 'admin123@gmail.com' 
+      // AND user_role = 1 
+      // AND status = 'active'
+      // LIMIT 1;`;
       //console.log("user : ",  user.rows[0]);
       const user =user_details.rows[0];
       if (user) {
