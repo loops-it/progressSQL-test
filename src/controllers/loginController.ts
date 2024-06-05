@@ -31,7 +31,7 @@ export const login = async (req: Request, res: Response, next: Function) => {
       AND user_role = 1 
       AND status = 'active'
       LIMIT 1;`;
-      console.log(user);
+      console.log("user : ", user);
       if (user) {
         if(!await bcrypt.compare(password, user.password)){
         req.flash('error', 'Invalid login details');
