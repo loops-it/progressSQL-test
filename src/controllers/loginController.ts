@@ -9,6 +9,9 @@ import User from '../../models/User';
 import bcrypt from 'bcrypt';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { sql } from '@vercel/postgres';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 interface UserDecodedToken extends JwtPayload {
   id: string;
@@ -18,11 +21,11 @@ export const login = async (req: Request, res: Response, next: Function) => {
     let email = req.body.email;
     let password = req.body.password;
     try {
-      const user_details = await User.findOne({
+      const user = await prisma.user.findFirst({
         where: {
-        email,
-        "user_role" : "1",
-        "status" : "active",
+          email: email,
+          user_role: 1,
+          status: "active",
         },
       });
       // const user_details = await sql`SELECT id, email, password, user_role, status, online_status,createdAt,updatedAt
@@ -31,8 +34,7 @@ export const login = async (req: Request, res: Response, next: Function) => {
       // AND user_role = 1 
       // AND status = 'active'
       // LIMIT 1;`;
-      //console.log("user : ",  user.rows[0]);
-      const user =user_details.rows[0];
+      console.log("user : ", user);
       if (user) {
         if(!await bcrypt.compare(password, user.password)){
         req.flash('error', 'Invalid login details');
