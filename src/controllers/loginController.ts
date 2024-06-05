@@ -8,6 +8,7 @@ import "dotenv/config";
 import User from '../../models/User';
 import bcrypt from 'bcrypt';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { sql } from '@vercel/postgres';
 
 interface UserDecodedToken extends JwtPayload {
   id: string;
@@ -17,14 +18,20 @@ export const login = async (req: Request, res: Response, next: Function) => {
     let email = req.body.email;
     let password = req.body.password;
     try {
-      const user = await User.findOne({
-        where: {
-        email,
-        "user_role" : "1",
-        "status" : "active",
-        },
-      });
-  
+      // const user = await User.findOne({
+      //   where: {
+      //   email,
+      //   "user_role" : "1",
+      //   "status" : "active",
+      //   },
+      // });
+      const user = await sql`SELECT id, email, password, user_role, status, online_status,createdAt,updatedAt
+      FROM users
+      WHERE email = 'admin123@gmail.com' 
+      AND user_role = 1 
+      AND status = 'active'
+      LIMIT 1;`;
+      console.log(user);
       if (user) {
         if(!await bcrypt.compare(password, user.password)){
         req.flash('error', 'Invalid login details');
